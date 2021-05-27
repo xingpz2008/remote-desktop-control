@@ -47,7 +47,7 @@ public abstract class AbstractDisplayPuppet implements IDisplayPuppet {
      */
     private void setting(){
         jFrame.setLocation(250, 250);
-        jFrame.setSize(500,500);
+        jFrame.setSize(1000,800);
         jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         jFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -67,7 +67,7 @@ public abstract class AbstractDisplayPuppet implements IDisplayPuppet {
         final MouseListener mouseListener = new MouseListener(AbstractDisplayPuppet.this);
         jFrame.addKeyListener(keyBoardListener);
         imageJpanel.addMouseListener(mouseListener);
-        imageJpanel.addMouseMotionListener(mouseListener);
+//        imageJpanel.addMouseMotionListener(mouseListener);
         imageJpanel.addMouseWheelListener(mouseListener);
     }
 

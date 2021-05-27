@@ -13,7 +13,7 @@ import static cn.yang.common.constant.ExceptionMessageConstants.PUPPET_CONNECTIO
  * @author Cool-Coding
  *         2018/7/27
  */
-public class CommonFireCommandHandler extends AbstractServerCommandHandler{
+public class TerminateCommandHandler extends AbstractServerCommandHandler{
     @Override
     public void handle0(ChannelHandlerContext ctx, Request request) throws Exception {
         final String puppetName = request.getPuppetName();
@@ -26,9 +26,12 @@ public class CommonFireCommandHandler extends AbstractServerCommandHandler{
             return;
         }
 
+        // 删除链接
+        channelPair.setMasterChannel(null);
+
         //发送数据
         final Channel puppetChannel = channelPair.getPuppetChannel();
-        Response response;
+        Response response=null;
         response = buildResponse(request,request.getCommand(),request.getValue());
         puppetChannel.writeAndFlush(response);
     }
