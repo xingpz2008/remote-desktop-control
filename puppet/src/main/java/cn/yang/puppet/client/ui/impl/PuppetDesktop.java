@@ -45,6 +45,8 @@ public void actionPerformed(ActionEvent e) {
         );
         IPSettingFrame.setVisible(true);
 //end of UI Realization region*/
+
+/*old code region
 public class PuppetDesktop implements INettyClient  {
 
     private INettyClient puppetClient;
@@ -52,7 +54,7 @@ public class PuppetDesktop implements INettyClient  {
 
     /**
      * 清晰度[10,100]
-     */
+     *//*
     private int quality;
 
     public PuppetDesktop(){
@@ -71,7 +73,7 @@ public class PuppetDesktop implements INettyClient  {
         BufferedImage bufferedImage =  getRobot().createScreenCapture(screenRect);
         return ImageUtils.compressedImageAndGetByteArray(bufferedImage,quality/100.0f);
     }
-    //todo solve getRobot syntax
+
 
     @Override
     public void connect() throws Exception{
@@ -86,4 +88,28 @@ public class PuppetDesktop implements INettyClient  {
     public void setQuality(int quality) {
         this.quality = quality;
     }
+}
+*/
+
+
+
+
+/**
+ * @author Cool-Coding
+ *         2018/7/25
+ */
+public class PuppetDesktop implements INettyClient {
+
+    private INettyClient puppetClient;
+
+
+    @Override
+    public void connect() throws Exception{
+        puppetClient.connect();
+    }
+
+    public void setPuppetClient(PuppetNettyClient puppetClient) {
+        this.puppetClient = puppetClient;
+    }
+
 }

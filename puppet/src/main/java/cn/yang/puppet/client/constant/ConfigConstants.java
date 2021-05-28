@@ -9,7 +9,7 @@ public class ConfigConstants {
      * 配置文件名
      */
     public static final String CONFIG_FILE_PATH= "puppet-config.txt";
-
+    public static final String CONFIG_USER_FILE_PATH="puppet-user-config.txt";
     public static final String HEARTBEAT_INTERVAL="heartbeat.interval";
     public static final String RECONNECT_INTERVAL="reconnect.interval";
     public static final String TASK_CHECK_INTERVAL="task.check.interval";
