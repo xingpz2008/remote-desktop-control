@@ -3,3 +3,6 @@ common/target
 master/target
 puppet/target
 server/target
+puppet/src/main/protoc.exe
+puppet/src/main/protoc-gen-grpc-java.exe
+/test

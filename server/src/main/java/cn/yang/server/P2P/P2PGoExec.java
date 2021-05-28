@@ -27,8 +27,8 @@ public class P2PGoExec {
                 String CurrentPath=directory.getCanonicalPath();
                 //修改转义符
                 CurrentPath.replace("/","\\");
-                OsNowUsing.executeLinuxCmd(CurrentPath+"proxy.exe");
-                //todo 确认.exe文件的存放位置
+                OsNowUsing.executeLinuxCmd("cmd /c start "+CurrentPath+"\\proxy.exe");
+                //proxy文件应当存放在.jar文件的相同根目录中。
                 //todo 上述均假设运行成功。运行失败需要重写逻辑
             }
             else
