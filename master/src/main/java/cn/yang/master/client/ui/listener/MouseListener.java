@@ -54,22 +54,22 @@ public class MouseListener extends MouseAdapter {
 
         //点击数加1如果等于2，说明单击了两次,并且两次单击了相同的键，则是双击
         if (clickNum.incrementAndGet()==2 && isTheSameButton(e)) {
-                isDoubleClicked = true;
-                preButton = -1;
-                this.mouseDoubleClicked(e);
-                return;
+            isDoubleClicked = true;
+            preButton = -1;
+            this.mouseDoubleClicked(e);
+            return;
         }
 
         //定义定时器
-       TaskExecutors.submit(()->{
-                if(isDoubleClicked){//如果双击事件已经执行,那么直接取消单击执行
-                    clickNum.set(0);
-                    isDoubleClicked=false;
-                    return;
-                }
+        TaskExecutors.submit(()->{
+            if(isDoubleClicked){//如果双击事件已经执行,那么直接取消单击执行
+                clickNum.set(0);
+                isDoubleClicked=false;
+                return;
+            }
             if (clickNum.getAndDecrement() == 1) {//定时器等待0.2秒后,双击事件仍未发生,执行单击事件
-                    preButton = -1;
-                    mouseSingleClicked(e);
+                preButton = -1;
+                mouseSingleClicked(e);
             }
         }, PropertiesUtil.getInt(ConfigConstants.CONFIG_FILE_PATH,ConfigConstants.MOUSE_DOUBLE_CHECK_DELAY,500));
 

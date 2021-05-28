@@ -11,4 +11,5 @@ public class ConfigConstants {
     public static final String MASTER_CONNECT_PUPPET_RETRY_TIMES="master.connect.puppet.retry.times";
     public static final String SERVER_IP="server.ip";
     public static final String SERVER_PORT="server.port";
+
 }

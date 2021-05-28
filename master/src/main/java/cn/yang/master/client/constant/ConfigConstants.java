@@ -9,7 +9,7 @@ public class ConfigConstants {
      * 配置文件名
      */
     public static final String CONFIG_FILE_PATH= "master-config.txt";
-
+    public static final String CONFIG_USER_FILE_PATH="puppet-user-config.txt";
     /**
      * 判断鼠标是否双击延迟的时间
      */

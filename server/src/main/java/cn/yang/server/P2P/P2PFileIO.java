@@ -1,15 +1,15 @@
 package cn.yang.server.P2P;
 
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.util.FileCopyUtils;
+
 import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import org.apache.commons.io.IOUtils;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.util.FileCopyUtils;
 
 public class P2PFileIO {
     /**
@@ -22,6 +22,7 @@ public class P2PFileIO {
             byte[] byteArray = IOUtils.toByteArray(in);
             in.close();
             return new ByteArrayInputStream(byteArray);
+            //todo solve the IOUtils syntax
         }
 
         /**

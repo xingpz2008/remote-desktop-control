@@ -2,12 +2,13 @@ package cn.yang.puppet.client.ui;
 
 import cn.yang.common.InputEvent.MasterKeyEvent;
 import cn.yang.common.InputEvent.MasterMouseEvent;
+import cn.yang.common.netty.INettyClient;
 
 /**
  * @author Cool-Coding
  *         2018/8/2
  */
-public interface IReplay {
+public interface IReplay{
     /**
      * 键按下
      * @param keyEvent

@@ -1,16 +1,18 @@
 package cn.yang.master.client.netty;
 
+import cn.yang.common.netty.ChannelInitializer;
+import cn.yang.common.dto.Request;
 import cn.yang.common.command.Commands;
 import cn.yang.common.constant.Constants;
-import cn.yang.common.dto.Request;
 import cn.yang.common.generator.SequenceGenerate;
-import cn.yang.common.netty.ChannelInitializer;
 import cn.yang.common.netty.INettyClient;
 import cn.yang.common.util.BeanUtil;
 import cn.yang.common.util.MacUtils;
+import cn.yang.master.client.constant.ExceptionMessageConstants;
 import cn.yang.common.util.PropertiesUtil;
 import cn.yang.master.client.constant.ConfigConstants;
-import cn.yang.master.client.constant.ExceptionMessageConstants;
+import cn.yang.master.client.ui.MasterConnectionPopUp;
+
 import cn.yang.master.client.exception.MasterChannelHandlerException;
 import cn.yang.master.client.exception.MasterClientException;
 import io.netty.bootstrap.Bootstrap;
@@ -18,9 +20,14 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
+
+import javax.swing.*;
+import java.io.IOException;
 
 /**
  * @author Cool-Coding
@@ -40,7 +47,7 @@ public class MasterNettyClient implements INettyClient{
 
     private String host;
     private int port;
-
+    private boolean ServerRecorded=false;
     /**
      * 初始化
      */
@@ -48,7 +55,6 @@ public class MasterNettyClient implements INettyClient{
         group = new NioEventLoopGroup();
         host = PropertiesUtil.getString(ConfigConstants.CONFIG_FILE_PATH, ConfigConstants.SERVER_IP);
         port = PropertiesUtil.getInt(ConfigConstants.CONFIG_FILE_PATH, ConfigConstants.SERVER_PORT);
-
     }
 
     /**
@@ -57,6 +63,20 @@ public class MasterNettyClient implements INettyClient{
      */
     @Override
     public void connect() throws Exception{
+        if(ServerRecorded==false){
+            MasterConnectionPopUp ServerDataPopup=new MasterConnectionPopUp();
+            while(true){
+                if(ServerDataPopup.getButtonPressed()==true) {
+                    host= ServerDataPopup.getHost();
+                    port= ServerDataPopup.getPort();
+                    ServerRecorded=true;
+                    break;
+                }
+                System.out.print("loop in progress\n");
+            }
+            System.out.print(host+":"+port);
+        }
+        System.out.print("start");
         final Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group)
                 .channel(NioSocketChannel.class)
@@ -65,10 +85,10 @@ public class MasterNettyClient implements INettyClient{
         final ChannelFuture sync = bootstrap.connect(host, port).sync();
         sync.channel().writeAndFlush(buildConnectRequest());
         try {
-                sync.channel().closeFuture();
+            sync.channel().closeFuture();
         }catch (Exception e){
-                LOGGER.error(e.getMessage(),e);
-                throw e;
+            LOGGER.error(e.getMessage(),e);
+            throw e;
         }
     }
 
@@ -83,7 +103,7 @@ public class MasterNettyClient implements INettyClient{
         try {
             getChannelHandler().fireCommand(puppetName,command,data);
         }catch (MasterChannelHandlerException e){
-           throw new MasterClientException(e.getMessage(),e);
+            throw new MasterClientException(e.getMessage(),e);
         }
     }
 
