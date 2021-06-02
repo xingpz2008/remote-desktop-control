@@ -22,7 +22,6 @@ public class P2PFileIO {
             byte[] byteArray = IOUtils.toByteArray(in);
             in.close();
             return new ByteArrayInputStream(byteArray);
-            //todo solve the IOUtils syntax
         }
 
         /**

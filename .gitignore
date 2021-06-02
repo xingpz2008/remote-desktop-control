@@ -5,4 +5,6 @@ puppet/target
 server/target
 puppet/src/main/protoc.exe
 puppet/src/main/protoc-gen-grpc-java.exe
-/test
+/test/*
+*.exe
+/Punching_Go
