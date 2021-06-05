@@ -54,19 +54,8 @@ public class PuppetNettyClient implements INettyClient {
 
     @Override
     public void connect(){
-        if(ServerRecorded==false){
-            PuppetConnectionPopUp ServerDataPopup=new PuppetConnectionPopUp();
-            while(true){
-                if(ServerDataPopup.getButtonPressed()==true) {
-                    host= ServerDataPopup.getHost();
-                    port= ServerDataPopup.getPort();
-                    ServerRecorded=true;
-                    break;
-                }
-                System.out.print("loop in progress\n");
-            }
-            System.out.print(host+":"+port);
-        }
+            host=PropertiesUtil.getString(ConfigConstants.CONFIG_USER_FILE_PATH,ConfigConstants.SERVER_IP);
+            port=Integer.parseInt(PropertiesUtil.getString(ConfigConstants.CONFIG_USER_FILE_PATH,ConfigConstants.SERVER_PORT));
             final Bootstrap bootstrap = new Bootstrap();
             //group = new NioEventLoopGroup();
             bootstrap.group(group)
@@ -91,6 +80,24 @@ public class PuppetNettyClient implements INettyClient {
             }
 
     }
+    /*
+
+    if(ServerRecorded==false){
+            PuppetConnectionPopUp ServerDataPopup=new PuppetConnectionPopUp();
+            while(true){
+                if(ServerDataPopup.getButtonPressed()==true) {
+                    host= ServerDataPopup.getHost();
+                    port= ServerDataPopup.getPort();
+                    ServerRecorded=true;
+                    break;
+                }
+                System.out.print("loop in progress\n");
+            }
+            System.out.print(host+":"+port);
+        }
+
+
+     */
 
     public void setChannelInitialize(ChannelInitializer channelInitialize) {
         this.channelInitialize = channelInitialize;

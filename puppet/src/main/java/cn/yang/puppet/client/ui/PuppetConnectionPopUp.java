@@ -2,7 +2,6 @@ package cn.yang.puppet.client.ui;
 
 import java.awt.*;
 import java.awt.event.*;
-import cn.yang.puppet.client.netty.PuppetNettyClient;
 import cn.yang.puppet.client.constant.ConfigConstants;
 import java.io.*;
 
@@ -36,8 +35,9 @@ public class PuppetConnectionPopUp extends Frame {
                 //ConfirmButton.setBackground(new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256)));
                 System.out.print(host+" "+port+"\n");
                 try {
-                    PuppetConnectionPupUpIO UserDataIO=new PuppetConnectionPupUpIO(ConfigConstants.CONFIG_USER_FILE_PATH);
+                    PuppetConnectionPupUpIO UserDataIO=new PuppetConnectionPupUpIO();
                     UserDataIO.PuppetConnectionPupUpCacheClear(ConfigConstants.CONFIG_USER_FILE_PATH);
+                    UserDataIO.PuppetConnectionPupUpIOCreate(ConfigConstants.CONFIG_USER_FILE_PATH);
                     //删除之前的用户缓存
                     UserDataIO.PuppetConnectionPupUpWrite("server.ip="+host+"\n");
                     UserDataIO.PuppetConnectionPupUpWrite("server.port="+port+"\n");

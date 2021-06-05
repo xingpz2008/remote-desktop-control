@@ -6,7 +6,12 @@ import java.io.*;
 
 public class PuppetConnectionPupUpIO {
     private String classString;
-    public PuppetConnectionPupUpIO(String string)  throws IOException{
+    public PuppetConnectionPupUpIO()
+    {
+
+    }
+
+    public void PuppetConnectionPupUpIOCreate(String string)  throws IOException{
         classString=string;
         File file =new File(string);      //ConfigConstants.CONFIG_USER_FILE_PATH
         if(!file.exists()) {

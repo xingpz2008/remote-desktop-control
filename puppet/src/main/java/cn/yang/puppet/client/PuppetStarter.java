@@ -8,6 +8,9 @@ import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import cn.yang.puppet.client.ui.PuppetConnectionPopUp;
+
+import java.io.IOException;
 
 /**
  * @author Cool-Coding
@@ -20,7 +23,7 @@ public class PuppetStarter {
 
     public static io.grpc.Channel goRobotChannel;
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         // 1. 初始化spring类
         final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("puppet-beans.xml");
         context.start();
@@ -42,14 +45,29 @@ public class PuppetStarter {
         }
     }
 
-    private static void ConnectGoRobotIfNecessary() {
+    private static void ConnectGoRobotIfNecessary() throws IOException {
+        boolean ServerRecorded=false;
+        if(ServerRecorded==false){
+            PuppetConnectionPopUp ServerDataPopup=new PuppetConnectionPopUp();
+            while(true){
+                if(ServerDataPopup.getButtonPressed()==true) {
+                    ServerRecorded=true;
+                    break;
+                }
+                System.out.print("loop in progress\n");
+            }
+        }
         String robot = PropertiesUtil.getString(ConfigConstants.CONFIG_FILE_PATH,ConfigConstants.ROBOT);
         if ("goRobot".equals(robot)) {
             String endpoint = PropertiesUtil.getString(ConfigConstants.CONFIG_FILE_PATH, ConfigConstants.GO_ROBOT_ENDPOINT,"127.0.0.1:12345");
             String[] endpointSplit = endpoint.split(":");
+            endpointSplit[0]=PropertiesUtil.getString(ConfigConstants.CONFIG_USER_FILE_PATH,ConfigConstants.SERVER_IP);
+            endpointSplit[1]=PropertiesUtil.getString(ConfigConstants.CONFIG_USER_FILE_PATH,ConfigConstants.SERVER_PORT);
             goRobotChannel = NettyChannelBuilder.forAddress(endpointSplit[0], Integer.parseInt(endpointSplit[1]))
                     .negotiationType(NegotiationType.PLAINTEXT)
                     .build();
+            //配置文件应该可以写入，在IDEA中的配置文件路径在META-INF下，实际部署中直接将配置文件直接放在根目录
+            //todo 可以考虑创建配置文件夹，专门放入配置文件。
         }
     }
 
